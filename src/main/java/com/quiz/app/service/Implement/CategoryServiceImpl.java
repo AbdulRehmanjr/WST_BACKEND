@@ -43,12 +43,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category getCategoryByName(String title) {
+        
+        return this.catRepo.findByTitle(title);
+    }
+
+
+    @Override
     public Category updateCategory(Category category) {
         
         
         return this.catRepo.save(category);
     }
 
+ 
 
     
 }

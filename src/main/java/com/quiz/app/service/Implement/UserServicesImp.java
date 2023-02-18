@@ -1,10 +1,6 @@
 package com.quiz.app.service.Implement;
 
 import java.util.List;
-import java.util.Set;
-
-
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,16 +43,17 @@ public class UserServicesImp implements UserService {
     }
     @Override
     public void deleteUser(Long id) {
+        log.info("DELETE with id :{}",id);
         this.userRepo.deleteById(id);
     }
     @Override
     public List<User> getAllUsers() {
-        
+        log.info("Getting all users");
         return this.userRepo.findAll();
     }
     @Override
     public User getUserByEmail(String email) {
-        
+        log.info("Getting By email");
         return this.userRepo.findByEmail(email);
     }
 

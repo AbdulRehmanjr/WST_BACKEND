@@ -34,39 +34,42 @@ public class CategoryController {
     private CategoryService catService;
 
 
-    // add a category
-    @PostMapping("/add-category")
-    public ResponseEntity<?> addCategory(@RequestBody Category category) {
 
-        log.info("POST: /add-category");
-        Category cat = this.catService.addCategory(category);
-        return ResponseEntity.ok(cat);
+    @PostMapping("/create")
+    public ResponseEntity<String> addCategory(@RequestBody Category category) {
+
+        Category found = this.catService.getCategoryByName(category.getTitle());
+        if(found!=null){
+            return ResponseEntity.badRequest().body("Error category already existed");
+        }
+        log.info("Adding new Category");
+        this.catService.addCategory(category);
+        return ResponseEntity.ok().body("New Category addd.");
     }
 
-    // getting category by id
+
 
     @GetMapping("/{categoryId}")
     public Category getCatergoryById(@PathVariable("categoryId") Long id) {
 
-        log.info("GET: /{categoryId}");
         return this.catService.getCategoryById(id);
     }
     
     @GetMapping("/all")
     public List<Category> getAllCategories() {
-        log.info("GET: /all");
+
         return this.catService.getAllCategories();
     }
 
     @PutMapping("/update")
     public Category updateCategory(@RequestBody Category category) {
-        log.info("PUT: /update");
+
         return this.catService.updateCategory(category);
     }
     
     @DeleteMapping("/{categoryId}")
     public void deleteCategory(@PathVariable("categoryId") Long id) {
-        log.info("DELETE: /{categoryId}");
+
         this.catService.deleteCategory(id);
     }
 

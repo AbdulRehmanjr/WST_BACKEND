@@ -72,7 +72,7 @@ public class  SecurityConfig {
                 .authorizeHttpRequests((req) -> 
                     req.requestMatchers("/user/protected").hasAuthority("USER")
                     .requestMatchers("/user/auth").hasAuthority("ADMIN")
-                    .requestMatchers("/role/**","/token/**","/user/register").permitAll()
+                    .requestMatchers("/role/**","/token/**","/user/**","/quiz/**","/category/**","/question/**").permitAll()
                     .anyRequest().authenticated()
                     )
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)

@@ -34,17 +34,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             throws ServletException, IOException {
                 
         final String RequestTokenHeader = request.getHeader("Authorization");
-        log.info("RequestTokenHeader: "+RequestTokenHeader);
+        // geting request type
+        log.info("Request Type: {}",request.getMethod());
+        log.info("Request URI: {}",request.getRequestURI());
         String username = null;
         String jwttoken = null;
 
         if(RequestTokenHeader != null && RequestTokenHeader.startsWith("Bearer ")){
             jwttoken = RequestTokenHeader.substring(7);
-            log.info("jwttoken: "+jwttoken);
             try{
-
                 username = this.jwtUtil.extractUsername(jwttoken);
-                log.info("username: "+username);
             
             }catch(Exception e){
                 log.error("Cannot extract username from token / expirerd token");
@@ -58,22 +57,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             final UserDetails userDetail = this.userDetails.loadUserByUsername(username);
             // log.info("userDetails: "+userDetails.toString());
-            log.info("User: "+username+" is authenticated");
-
+            log.info("User is authenticated");
             if(this.jwtUtil.validateToken(jwttoken, userDetail)){
                 // token is valid
 
                 UsernamePasswordAuthenticationToken uPAT = new UsernamePasswordAuthenticationToken(userDetail,null,userDetail.getAuthorities());
                 uPAT.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                log.info("Authenticated user: "+username+", setting security context");
+                log.info("Authenticated user setting security context");
                 SecurityContextHolder.getContext().setAuthentication(uPAT);
             }
         }else{
-            log.error("Token not valide {filter class}");
+            log.error("Token not valide");
         }
            
     filterChain.doFilter(request, response);
-    log.info("filterChain.doFilter(request, response);");
     
     }
     

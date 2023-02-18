@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.quiz.app.model.Category;
 import com.quiz.app.model.Quiz;
+import com.quiz.app.service.CategoryService;
 import com.quiz.app.service.QuizService;
 
 @RestController
@@ -31,15 +33,20 @@ public class QuizController {
     @Autowired
     private QuizService quizService;
 
-    @PostMapping("/add-quiz")
+    @Autowired
+    private CategoryService catService;
+
+    @PostMapping("/create")
     public ResponseEntity<?> addQuiz(@RequestBody Quiz quiz) {
 
-        log.info("POST: /add-quiz");
-        //Quiz q = new Quiz();
-     //   q.setCategory(this.catRepo.findById(quiz.getCategory().getCategoryId()).get());
-        Quiz q = this.quizService.addQuiz(quiz);
-       
-        return ResponseEntity.ok(q);
+        Category foundCategory = this.catService.getCategoryById(quiz.getCategory().getCategoryId());
+        
+        if(foundCategory!=null){
+            quiz.setCategory(foundCategory);
+            this.quizService.addQuiz(quiz);    
+            return ResponseEntity.ok().body("Quiz Added");
+        }
+        return ResponseEntity.badRequest().body("Quiz not added");
     }
 
     // getting category by id

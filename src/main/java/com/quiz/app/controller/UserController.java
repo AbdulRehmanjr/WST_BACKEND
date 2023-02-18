@@ -47,7 +47,6 @@ public class UserController {
         }
         if(role!=null){
             if(user.getUserType().equals("USER")){
-
                 this.userService.createUser(user,role);
                 return  ResponseEntity.ok().body("User Created successfully with role as USER");
             }
@@ -59,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public User getuser(@PathVariable("username") String username){
+    public User getuser(@PathVariable("userName") String username){
 
         User result = this.userService.getUser(username);
         if(result == null){
@@ -69,7 +68,7 @@ public class UserController {
         log.info("User Found {Controller class user }" );
 
         return result;
-
+        
     }
     
     @GetMapping("/all")
