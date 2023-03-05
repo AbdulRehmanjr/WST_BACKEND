@@ -1,6 +1,8 @@
 package com.quiz.app.service.Implement;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,10 @@ public class UserServicesImp implements UserService {
 
     @Override
     public User createUser(User user,Role role){
-        log.info("Creating new user with {} role",role.getRoleName());    
-        user.setRole(role);
+        
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
         user.setUserPassword(encoder.encode(user.getUserPassword()));
         return this.userRepo.save(user);
     }

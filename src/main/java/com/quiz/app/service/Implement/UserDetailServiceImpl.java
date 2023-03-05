@@ -5,6 +5,8 @@ package com.quiz.app.service.Implement;
 
 
 
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepo;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         
-        User resultUser = this.userRepo.findByUserName(username);
+        User resultUser = this.userRepo.findByEmail(email);
         if(resultUser == null){
-            log.error("User not found of username: "+username);
+            log.error("No user with {} given email ",email);
         }
-        return (UserDetails)resultUser;
+        return new org.springframework.security.core.userdetails.User(resultUser.getEmail(),resultUser.getUserPassword(),resultUser.getRoles());
     }
 
 

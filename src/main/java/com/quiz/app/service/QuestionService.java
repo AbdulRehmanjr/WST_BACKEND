@@ -13,7 +13,7 @@ public interface QuestionService {
     
     public  Question addQuestion(Question question);
 
-    public void addList(MultipartFile file,Quiz quiz);
+    public List<Question> addList(MultipartFile file,Quiz quiz);
 
     public List<Question> getQuestionByQuiz(Long id);
 

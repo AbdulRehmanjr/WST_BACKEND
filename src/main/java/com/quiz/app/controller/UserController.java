@@ -9,6 +9,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,19 +43,24 @@ public class UserController {
     public ResponseEntity<String> resgisterUser(@RequestBody User user){
 
         Role role = this.roleRepo.findByRoleName(user.getUserType());
+        log.info("User {}",user);
+
         User found = this.userService.getUserByEmail(user.getEmail());
+        
         if (found!=null){
+            log.error("User already found");
             return ResponseEntity.badRequest().body("User already exist with given email");
         }
         if(role!=null){
             if(user.getUserType().equals("USER")){
                 this.userService.createUser(user,role);
-                return  ResponseEntity.ok().body("User Created successfully with role as USER");
+                log.info("USER CREATED WITH ROLE USER");
+                return  ResponseEntity.status(200).body("User Created successfully with role as USER");
             }
             this.userService.createUser(user,role);
             return  ResponseEntity.ok().body("User Created successfully with role as TEACHER");
         }
-        log.error("User creation error");
+        log.error("User Creation Error");
         return ResponseEntity.badRequest().body("User creation error");
     }
 

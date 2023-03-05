@@ -32,6 +32,8 @@ public class Quiz {
 
     private boolean active=false;
 
+    private int totalMarks;
+
     @ManyToOne
     private Category category;
 
@@ -95,10 +97,12 @@ public class Quiz {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Quiz [quizId=" + quizId + ", title=" + title + ", description=" + description + ", maxTime=" + maxTime
-                + ", numberOfQuestions=" + numberOfQuestions + ", active=" + active + ", category=" + category + "]";
+    public int getTotalMarks() {
+        return totalMarks;
+    }
+
+    public void setTotalMarks(int totalMarks) {
+        this.totalMarks = totalMarks;
     }
         
 }

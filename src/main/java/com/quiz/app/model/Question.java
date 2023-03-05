@@ -36,7 +36,6 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
-    @Transient
     private Quiz quiz;
 
 

@@ -4,8 +4,6 @@ package com.quiz.app.controller;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +27,7 @@ import com.quiz.app.service.QuizService;
 @RequestMapping("/question")
 @CrossOrigin("http://localhost:4200")
 public class QuestionController {
-
-    private Logger log = LoggerFactory.getLogger(QuestionController.class);
+    
 
     @Autowired
     private QuestionService questionService;
@@ -42,10 +39,15 @@ public class QuestionController {
             @PathVariable("quizId") long quizId) {
 
         Quiz quiz = this.quizService.getQuizById(quizId);
+        
 
-        this.questionService.addList(file,quiz);
+       List<Question> response =  this.questionService.addList(file,quiz);
 
-        return ResponseEntity.ok().body("Question Saved");
+       if(response==null){
+        return ResponseEntity.badRequest().body("Error in Savinf Question");
+       }
+
+       return ResponseEntity.ok().body("Question Saved");
     }
 
     @GetMapping("/{questionId}")
@@ -55,7 +57,7 @@ public class QuestionController {
         return this.questionService.getQuestionById(id);
     }
 
-    @GetMapping("/questions/{quizId}")
+    @GetMapping("/quiz/{quizId}")
     public List<Question> getAllQuestionsByQuizId(@PathVariable("quizId") Long id) {
 
         Quiz quiz = this.quizService.getQuizById(id);

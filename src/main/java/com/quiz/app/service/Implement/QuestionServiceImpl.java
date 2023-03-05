@@ -66,7 +66,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void addList(MultipartFile file,Quiz quiz) {
+    public List<Question> addList(MultipartFile file,Quiz quiz) {
 
         List<Question> questions = new ArrayList<>();
 
@@ -89,10 +89,14 @@ public class QuestionServiceImpl implements QuestionService {
                 question.setQuiz(quiz);
 
                 questions.add(question);
+
+               return  this.questionRepo.saveAll(questions);
             }
         } catch (Exception e) {
             log.error("ERROR: {}",e.getMessage());
+            return null;
         }        
+        return null;
     }
 
     @Override

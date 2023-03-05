@@ -40,7 +40,7 @@ public class  SecurityConfig {
     private UserDetailServiceImpl uds;
 
     
-    // create secuirty configureation class with new spring update
+    
     
     
     @Bean
@@ -55,8 +55,7 @@ public class  SecurityConfig {
    @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
 
-        return config.getAuthenticationManager()
-        ;
+        return config.getAuthenticationManager();
     }
 
     @Bean
@@ -72,7 +71,7 @@ public class  SecurityConfig {
                 .authorizeHttpRequests((req) -> 
                     req.requestMatchers("/user/protected").hasAuthority("USER")
                     .requestMatchers("/user/auth").hasAuthority("ADMIN")
-                    .requestMatchers("/role/**","/token/**","/user/**","/quiz/**","/category/**","/question/**").permitAll()
+                    .requestMatchers("/role/**","/token/**","/user/**","/quiz/**","/category/**","/question/**","/question/quiz/**").permitAll()
                     .anyRequest().authenticated()
                     )
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)

@@ -1,26 +1,28 @@
 package com.quiz.app.model;
 
 public class JwtRequest {
-    private String username;
+    private String userEmail;
     private String password;
 
-    public JwtRequest() {
-       
+    public JwtRequest(String userEmail, String password) {
+        this.userEmail = userEmail;
+        this.password = password;
     }
-    public JwtRequest(String username, String password) {
-        this.setUsername(username);
-        this.setPassword(password);
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getUserEmail() {
+        return userEmail;
+    }
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+    @Override
+    public String toString() {
+        return "JwtRequest [userEmail=" + userEmail + ", password=" + password + "]";
     }
 }

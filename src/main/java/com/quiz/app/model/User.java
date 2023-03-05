@@ -1,10 +1,16 @@
 package com.quiz.app.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -19,8 +25,7 @@ public class User {
     private String userPassword;
     private String userType;
     
-    @ManyToOne
-    private Role role;
+    private Set<Role> roles = new HashSet<>();
     
     public long getUserId() {
         return userId;
@@ -46,22 +51,23 @@ public class User {
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
-    public Role getRole() {
-        return role;
-    }
-    public void setRole(Role role) {
-        this.role = role;
-    }
+
     public String getUserType() {
         return userType;
     }
     public void setUserType(String userType) {
         this.userType = userType;
     }
+    public Set<Role> getRoles() {
+        return roles;
+    }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
     @Override
     public String toString() {
         return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", userPassword="
-                + userPassword + ", userType=" + userType + ", role=" + role + "]";
+                + userPassword + ", userType=" + userType + ", roles=" + roles + "]";
     }
 
 }
