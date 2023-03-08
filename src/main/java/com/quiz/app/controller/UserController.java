@@ -58,7 +58,7 @@ public class UserController {
                 return  ResponseEntity.status(200).body("User Created successfully with role as USER");
             }
             this.userService.createUser(user,role);
-            return  ResponseEntity.ok().body("User Created successfully with role as TEACHER");
+            return  ResponseEntity.status(200).body("User Created successfully with role as TEACHER");
         }
         log.error("User Creation Error");
         return ResponseEntity.badRequest().body("User creation error");

@@ -4,6 +4,8 @@ package com.quiz.app.controller;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +31,7 @@ import com.quiz.app.service.QuizService;
 public class QuestionController {
     
 
+    private Logger log= LoggerFactory.getLogger(QuestionController.class);
     @Autowired
     private QuestionService questionService;
     @Autowired
@@ -37,17 +40,17 @@ public class QuestionController {
     @PostMapping("/{quizId}/addquestion")
     public ResponseEntity<?> addQuestion(@RequestParam("file") MultipartFile file,
             @PathVariable("quizId") long quizId) {
-
+        
+                log.info("Adding the quiz {}",quizId);
         Quiz quiz = this.quizService.getQuizById(quizId);
         
-
+            log.info("Quiz: {}",quiz);
        List<Question> response =  this.questionService.addList(file,quiz);
-
        if(response==null){
         return ResponseEntity.badRequest().body("Error in Savinf Question");
        }
 
-       return ResponseEntity.ok().body("Question Saved");
+       return ResponseEntity.status(200).body("Question Saved");
     }
 
     @GetMapping("/{questionId}")
@@ -64,7 +67,7 @@ public class QuestionController {
         
         List<Question> list = this.questionService.getQuestionByQuiz(id);
 
-        list = list.subList(0, Integer.parseInt(quiz.getNumberOfQuestions()));
+        list = list.subList(0, quiz.getNumberOfQuestions());
         
 
         Collections.shuffle(list);

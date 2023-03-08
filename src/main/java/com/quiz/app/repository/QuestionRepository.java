@@ -13,11 +13,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.quiz.app.model.Question;
-import com.quiz.app.model.Quiz;
 
 public interface QuestionRepository extends JpaRepository<Question,Long> {
     @Modifying
     @Transactional
-    @Query(value = "SELECT * FROM question WHERE quiz_quiz_id = ?1", nativeQuery = true)
-    List<Question> findByQuiz(Quiz quiz);
+    @Query(value = "SELECT * FROM questiontable WHERE quiz_quiz_id = (:quizId)",nativeQuery = true)
+    List<Question> findByQuiz(long quizId);
 }

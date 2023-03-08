@@ -59,10 +59,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getQuestionsOfQuiz(Quiz quiz) {
+    public List<Question> getQuestionsOfQuiz(long  quizId) {
         
 
-        return this.questionRepo.findByQuiz(quiz);
+        return this.questionRepo.findByQuiz(quizId);
     }
 
     @Override
@@ -86,24 +86,22 @@ public class QuestionServiceImpl implements QuestionService {
                 question.setOption3(data[3]);
                 question.setOption4(data[4]);
                 question.setAnswer(data[5]);
+                
                 question.setQuiz(quiz);
 
                 questions.add(question);
-
-               return  this.questionRepo.saveAll(questions);
             }
+            return  this.questionRepo.saveAll(questions);
         } catch (Exception e) {
             log.error("ERROR: {}",e.getMessage());
             return null;
         }        
-        return null;
     }
 
     @Override
     public List<Question> getQuestionByQuiz(Long id) {
-        Quiz q = new Quiz();
-        q.setQuizId(id);
-        return this.questionRepo.findByQuiz(q);
+
+        return this.questionRepo.findByQuiz(id);
     }
 
 

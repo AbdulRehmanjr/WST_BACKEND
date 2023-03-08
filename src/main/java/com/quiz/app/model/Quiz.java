@@ -26,9 +26,9 @@ public class Quiz {
     @Column(length = 5000)
     private String description;
 
-    private String maxTime;
+    private String time;
 
-    private String numberOfQuestions;
+    private int numberOfQuestions;
 
     private boolean active=false;
 
@@ -61,21 +61,7 @@ public class Quiz {
         this.description = description;
     }
 
-    public String getMaxTime() {
-        return maxTime;
-    }
 
-    public void setMaxTime(String maxTime) {
-        this.maxTime = maxTime;
-    }
-
-    public String getNumberOfQuestions() {
-        return numberOfQuestions;
-    }
-
-    public void setNumberOfQuestions(String numberOfQuestions) {
-        this.numberOfQuestions = numberOfQuestions;
-    }
 
     public boolean isActive() {
         return active;
@@ -103,6 +89,29 @@ public class Quiz {
 
     public void setTotalMarks(int totalMarks) {
         this.totalMarks = totalMarks;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public void setNumberOfQuestions(int numberOfQuestions) {
+        this.numberOfQuestions = numberOfQuestions;
+    }
+
+    @Override
+    public String toString() {
+        return "Quiz [quizId=" + quizId + ", title=" + title + ", description=" + description + ", time=" + time
+                + ", numberOfQuestions=" + numberOfQuestions + ", active=" + active + ", totalMarks=" + totalMarks
+                + ", category=" + category + "]";
     }
         
 }

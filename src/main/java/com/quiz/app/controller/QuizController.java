@@ -37,14 +37,15 @@ public class QuizController {
     private CategoryService catService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> addQuiz(@RequestBody Quiz quiz) {
+    public ResponseEntity<String> addQuiz(@RequestBody Quiz quiz) {
 
+        log.info("QUIZ: {}",quiz);
         Category foundCategory = this.catService.getCategoryById(quiz.getCategory().getCategoryId());
         
         if(foundCategory!=null){
             quiz.setCategory(foundCategory);
             this.quizService.addQuiz(quiz);    
-            return ResponseEntity.ok().body("Quiz Added");
+            return ResponseEntity.status(200).body("Quiz Added");
         }
         return ResponseEntity.badRequest().body("Quiz not added");
     }

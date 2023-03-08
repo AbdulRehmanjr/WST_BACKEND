@@ -44,7 +44,7 @@ public class CategoryController {
         }
         log.info("Adding new Category");
         this.catService.addCategory(category);
-        return ResponseEntity.ok().body("New Category addd.");
+        return ResponseEntity.status(200).body("New Category addd.");
     }
 
 
